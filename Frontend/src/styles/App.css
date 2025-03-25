@@ -1,0 +1,176 @@
+/* Base styles and variables */
+:root {
+  --primary-color: #00bcd4;
+  --secondary-color: #7c4dff;
+  --accent-color: #ff4081;
+  --background-color: #121212;
+  --surface-color: #1e1e1e;
+  --text-color: #e0e0e0;
+  --text-secondary: #a0a0a0;
+  --positive-color: #2ed573;
+  --neutral-color: #ffa502;
+  --negative-color: #ff4757;
+  --font-primary: 'Orbitron', sans-serif;
+  --font-secondary: 'Raleway', sans-serif;
+  --glow-effect: 0 0 10px rgba(0, 188, 212, 0.5), 0 0 20px rgba(0, 188, 212, 0.3);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-secondary);
+  background-color: var(--background-color);
+  color: var(--text-color);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* Neural background effect */
+.neural-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 50% 50%, rgba(124, 77, 255, 0.05) 0%, rgba(0, 0, 0, 0) 70%),
+              linear-gradient(
+                45deg,
+                rgba(0, 188, 212, 0.03) 25%,
+                transparent 25%,
+                transparent 75%,
+                rgba(0, 188, 212, 0.03) 75%,
+                rgba(0, 188, 212, 0.03)
+              ),
+              linear-gradient(
+                -45deg,
+                rgba(124, 77, 255, 0.03) 25%,
+                transparent 25%,
+                transparent 75%,
+                rgba(124, 77, 255, 0.03) 75%,
+                rgba(124, 77, 255, 0.03)
+              );
+  background-size: 100%, 20px 20px, 20px 20px;
+  z-index: -1;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+/* Header styles */
+.app-header {
+  padding: 2rem 0;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.brain-wave {
+  width: 60px;
+  height: 60px;
+  background-image: url('/src/assets/images/brain-waves.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  margin-right: 1rem;
+  filter: drop-shadow(0 0 8px rgba(0, 188, 212, 0.6));
+  animation: pulse 4s infinite;
+}
+
+.app-header h1 {
+  font-family: var(--font-primary);
+  font-size: 2.5rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: var(--glow-effect);
+}
+
+.tagline {
+  font-family: var(--font-secondary);
+  font-size: 1rem;
+  color: var(--text-secondary);
+  letter-spacing: 1px;
+  margin-bottom: 2rem;
+}
+
+/* Main content */
+.app-content {
+  flex: 1;
+  width: 100%;
+  z-index: 1;
+}
+
+.results-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+@media (min-width: 992px) {
+  .results-container {
+    grid-template-columns: 2fr 3fr;
+  }
+}
+
+/* Footer */
+.app-footer {
+  padding: 2rem 0;
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  margin-top: 3rem;
+}
+
+/* Animations */
+@keyframes pulse {
+  0% {
+    opacity: 0.8;
+    filter: drop-shadow(0 0 4px rgba(0, 188, 212, 0.4));
+  }
+  50% {
+    opacity: 1;
+    filter: drop-shadow(0 0 12px rgba(0, 188, 212, 0.8));
+  }
+  100% {
+    opacity: 0.8;
+    filter: drop-shadow(0 0 4px rgba(0, 188, 212, 0.4));
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .app-container {
+    padding: 1rem;
+  }
+  
+  .app-header h1 {
+    font-size: 2rem;
+  }
+  
+  .brain-wave {
+    width: 40px;
+    height: 40px;
+  }
+}

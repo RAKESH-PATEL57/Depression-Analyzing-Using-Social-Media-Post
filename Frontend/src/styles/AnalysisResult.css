@@ -1,0 +1,201 @@
+.analysis-container {
+    background-color: rgba(30, 30, 30, 0.7);
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(124, 77, 255, 0.2);
+    height: fit-content;
+  }
+  
+  .analysis-heading {
+    font-family: var(--font-primary);
+    font-size: 1.5rem;
+    color: var(--text-color);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .heading-icon {
+    font-size: 1.2rem;
+  }
+  
+  .analysis-card {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  /* User profile section */
+  .user-profile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.5rem;
+  }
+  
+  .username-badge {
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    font-family: var(--font-primary);
+    padding: 0.6rem 1.2rem;
+    border-radius: 25px;
+    font-size: 1rem;
+    font-weight: 500;
+    letter-spacing: 1px;
+    box-shadow: 0 3px 10px rgba(0, 188, 212, 0.3);
+  }
+  
+  /* Sentiment gauge */
+  .sentiment-gauge {
+    margin: 1rem 0;
+    text-align: center;
+  }
+  
+  .gauge-wrapper {
+    height: 12px;
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 6px;
+    position: relative;
+    margin-bottom: 0.5rem;
+    overflow: hidden;
+  }
+  
+  .gauge-fill {
+    height: 100%;
+    transition: width 1s ease-out;
+    border-radius: 6px;
+  }
+  
+  .gauge-markers {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    padding: 0 4px;
+    margin-top: 4px;
+  }
+  
+  .gauge-marker.negative { color: var(--negative-color); }
+  .gauge-marker.neutral { color: var(--neutral-color); }
+  .gauge-marker.positive { color: var(--positive-color); }
+  
+  .gauge-value {
+    font-family: var(--font-primary);
+    font-size: 1.1rem;
+    margin-top: 0.5rem;
+  }
+  
+  /* Sentiment summary */
+  .sentiment-summary {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    padding: 1.25rem;
+  }
+  
+  .summary-heading {
+    font-family: var(--font-primary);
+    font-size: 1.1rem;
+    color: var(--primary-color);
+    margin-bottom: 0.75rem;
+  }
+  
+  .summary-text {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--text-color);
+  }
+  
+  /* Metrics display */
+  .sentiment-metrics {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+  
+  .metric {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    padding: 1rem;
+    text-align: center;
+  }
+  
+  .metric-label {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+  }
+  
+  .metric-value {
+    font-family: var(--font-primary);
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+  
+  .metric-value.positive { color: var(--positive-color); }
+  .metric-value.neutral { color: var(--neutral-color); }
+  .metric-value.negative { color: var(--negative-color); }
+  
+  /* Analysis conclusion */
+  .analysis-conclusion {
+    display: flex;
+    justify-content: center;
+    margin-top: 0.5rem;
+  }
+  
+  .conclusion-badge {
+    font-family: var(--font-primary);
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 1px;
+    font-size: 0.9rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .conclusion-badge.positive {
+    color: var(--positive-color);
+    background-color: rgba(46, 213, 115, 0.1);
+    border: 1px solid rgba(46, 213, 115, 0.3);
+  }
+  
+  .conclusion-badge.negative {
+    color: var(--negative-color);
+    background-color: rgba(255, 71, 87, 0.1);
+    border: 1px solid rgba(255, 71, 87, 0.3);
+  }
+  
+  @media (max-width: 768px) {
+    .analysis-container {
+      padding: 1.5rem;
+    }
+    
+    .sentiment-metrics {
+      grid-template-columns: 1fr;
+    }
+    
+    .analysis-heading {
+      font-size: 1.3rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .sentiment-metrics {
+      gap: 0.75rem;
+    }
+    
+    .metric {
+      padding: 0.75rem;
+    }
+    
+    .metric-value {
+      font-size: 1.2rem;
+    }
+  }

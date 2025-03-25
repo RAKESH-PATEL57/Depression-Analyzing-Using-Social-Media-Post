@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <path d="M10 50 Q 25 20, 40 50 T 70 50 T 90 50" stroke="#00bcd4" stroke-width="3" fill="none" stroke-linecap="round">
+    <animate attributeName="d" dur="4s" repeatCount="indefinite" 
+      values="M10 50 Q 25 20, 40 50 T 70 50 T 90 50;
+              M10 50 Q 25 70, 40 50 T 70 50 T 90 50;
+              M10 50 Q 25 30, 40 50 T 70 70 T 90 50;
+              M10 50 Q 25 40, 40 30 T 70 50 T 90 40;
+              M10 50 Q 25 20, 40 50 T 70 50 T 90 50" />
+  </path>
+  <path d="M10 60 Q 25 30, 40 60 T 70 60 T 90 60" stroke="#7c4dff" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.6">
+    <animate attributeName="d" dur="5s" repeatCount="indefinite" 
+      values="M10 60 Q 25 30, 40 60 T 70 60 T 90 60;
+              M10 60 Q 25 80, 40 60 T 70 60 T 90 60;
+              M10 60 Q 25 40, 40 60 T 70 80 T 90 60;
+              M10 60 Q 25 50, 40 40 T 70 60 T 90 50;
+              M10 60 Q 25 30, 40 60 T 70 60 T 90 60" />
+  </path>
+  <circle cx="50" cy="50" r="30" fill="url(#grad)" opacity="0.1">
+    <animate attributeName="r" dur="3s" values="30;32;30" repeatCount="indefinite" />
+  </circle>
+  <defs>
+    <radialGradient id="grad" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+      <stop offset="0%" stop-color="#00bcd4" />
+      <stop offset="100%" stop-color="#7c4dff" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+</svg>
