@@ -1,9 +1,9 @@
 /* eslint-disable react/prop-types */
 import "../styles/AnalysisResult.css";
+import SentimentCharts from "./SentimentCharts";
 
-const AnalysisResult = ({ analysis, sentimentData, username }) => {
-  const { averageCompound, analysisResult, detailedScores } = sentimentData;
-  
+const AnalysisResult = ({ analysis, sentimentData, username, tweets, mlResults }) => {
+  const { averageCompound, analysisResult, detailedScores, riskLevel } = sentimentData;
   // Determine color based on sentiment score
   const getScoreColor = (score) => {
     if (score < -0.2) return "#ff4757"; // Negative/Depressed
@@ -13,6 +13,10 @@ const AnalysisResult = ({ analysis, sentimentData, username }) => {
 
   // Calculate percentage for the gauge
   const scorePercent = ((averageCompound + 1) / 2) * 100;
+
+  // Get ML model prediction data
+  const mlData = mlResults || sentimentData.mlResults;
+  console.log(riskLevel);
   
   return (
     <div className="analysis-container">
@@ -68,12 +72,39 @@ const AnalysisResult = ({ analysis, sentimentData, username }) => {
           </div>
         </div>
         
+        {/* ML Model Prediction Section */}
+        {/* {mlData && (
+          <div className="ml-prediction">
+            <h3 className="ml-heading">Machine Learning Analysis</h3>
+            <div className="ml-metrics">
+              <div className="ml-metric">
+                <div className="ml-metric-label">Depression Indicators</div>
+                <div className="ml-metric-value">{mlData.depressionPercentage.toFixed(1)}%</div>
+              </div>
+              <div className="ml-metric">
+                <div className="ml-metric-label">Analysis Result</div>
+                <div className="ml-metric-value">{mlData.analysisResult}</div>
+              </div>
+            </div>
+          </div>
+        )} */}
+        
         <div className="analysis-conclusion">
-          <div className={`conclusion-badge ${analysisResult.includes('not') ? 'positive' : 'negative'}`}>
-            {analysisResult.includes('not') ? 'LOW RISK' : 'ATTENTION NEEDED'}
+          <div className={`conclusion-badge ${
+            riskLevel === "minimal" ? 'positive' : riskLevel === "moderate" ? 'warning' : 'negative'
+          }`}>
+            {riskLevel === "minimal" ? 'MINIMAL RISK' : 
+             riskLevel === "moderate" ? 'MODERATE RISK' : 'HIGH RISK'}
           </div>
         </div>
       </div>
+
+      {/* Add the new charts component */}
+      <SentimentCharts 
+  tweets={tweets} 
+  sentimentData={sentimentData} 
+  mlResults={mlResults} 
+/>
     </div>
   );
 };

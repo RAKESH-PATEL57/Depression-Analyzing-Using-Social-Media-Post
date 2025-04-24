@@ -13,6 +13,7 @@ const UsernameForm = ({
   setTweets,
   setAnalysis,
   setSentimentData,
+  setMlResults,
   timer,
   setTimer
 }) => {
@@ -23,6 +24,7 @@ const UsernameForm = ({
       setError("You must wait until the timer reaches zero before trying again.");
       return;
     }
+   
 
     if (!username.trim()) {
       setError("Please enter a Twitter username.");
@@ -36,14 +38,26 @@ const UsernameForm = ({
     setLoading(true);
 
     try {
-      const response = await axios.get(`http://localhost:3000/analyze/${username}`);
+      const response = await axios.get(`http://localhost:3000/api/analyze/${username}`);
+      console.log("Success response:", response.data);
       setTweets(response.data.tweets);
       setAnalysis(response.data.analysis);
-      setSentimentData(response.data.sentimentData);
+      setSentimentData({
+        ...response.data.sentimentData,
+        tweetData: response.data.tweetData || response.data.tweets.map(text => ({ text }))
+      });
+      
+      // Add mlResults if available
+      if (response.data.mlResults) {
+        setMlResults(response.data.mlResults);
+      }
 
       // Set a 15-minute timer (15 * 60 seconds)
-      setTimer(15 * 60);
+      // setTimer(15 * 60);
     } catch (err) {
+      console.error("Error details:", err);
+      console.error("Response data:", err.response?.data);
+      console.error("Status code:", err.response?.status);
       setError(err.response?.data?.error || "An error occurred. Please try again.");
     } finally {
       setLoading(false);

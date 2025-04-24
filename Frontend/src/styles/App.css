@@ -54,16 +54,17 @@ body {
                 rgba(124, 77, 255, 0.03)
               );
   background-size: 100%, 20px 20px, 20px 20px;
-  z-index: -1;
+  z-index: -2;
 }
 
 .app-container {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  max-width: 1200px;
+  max-width: 1400px; /* Increased max-width to accommodate charts */
   margin: 0 auto;
   padding: 2rem;
+  position: relative;
 }
 
 /* Header styles */
@@ -128,9 +129,9 @@ body {
   margin-top: 3rem;
 }
 
-@media (min-width: 992px) {
+@media (min-width: 1200px) {
   .results-container {
-    grid-template-columns: 2fr 3fr;
+    grid-template-columns: 2fr 1fr;
   }
 }
 
@@ -159,7 +160,30 @@ body {
   }
 }
 
+/* 3D hover effects for cards */
+.analysis-container:hover,
+.form-container:hover,
+.tweets-container:hover,
+.chart-wrapper:hover {
+  transform: translateY(-5px);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+}
+
+.analysis-container,
+.form-container,
+.tweets-container,
+.chart-wrapper {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
 /* Responsive adjustments */
+@media (max-width: 992px) {
+  .app-container {
+    padding: 1.5rem;
+  }
+}
+
 @media (max-width: 768px) {
   .app-container {
     padding: 1rem;

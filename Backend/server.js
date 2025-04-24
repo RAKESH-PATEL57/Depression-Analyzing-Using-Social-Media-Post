@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import { analyzeTweets } from "./controllers/analysisController.js";
+import apiRoutes from "./routes/apiRoutes.js";
 
 // Load environment variables
 dotenv.config();
@@ -20,7 +20,7 @@ app.use(express.json());
 app.use(cors());
 
 // Routes
-app.get("/analyze/:username", analyzeTweets);
+app.use("/api", apiRoutes);
 
 // Start the server
 app.listen(PORT, () => {

@@ -2,6 +2,7 @@
 import "../styles/TweetList.css";
 
 const TweetList = ({ tweets }) => {
+  // console.log(tweets);
   return (
     <div className="tweets-container">
       <h2 className="tweets-heading">
