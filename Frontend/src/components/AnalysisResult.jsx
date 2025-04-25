@@ -3,7 +3,8 @@ import "../styles/AnalysisResult.css";
 import SentimentCharts from "./SentimentCharts";
 
 const AnalysisResult = ({ analysis, sentimentData, username, tweets, mlResults }) => {
-  const { averageCompound, analysisResult, detailedScores, riskLevel } = sentimentData;
+  const { averageCompound, combinedScore, analysisResult, detailedScores, riskLevel } = sentimentData;
+  
   // Determine color based on sentiment score
   const getScoreColor = (score) => {
     if (score < -0.2) return "#ff4757"; // Negative/Depressed
@@ -12,11 +13,28 @@ const AnalysisResult = ({ analysis, sentimentData, username, tweets, mlResults }
   };
 
   // Calculate percentage for the gauge
-  const scorePercent = ((averageCompound + 1) / 2) * 100;
+  // Use combined score if available, otherwise use averageCompound
+  const scoreToDisplay = combinedScore !== undefined ? combinedScore : averageCompound;
+  const scorePercent = ((scoreToDisplay + 1) / 2) * 100;
 
   // Get ML model prediction data
   const mlData = mlResults || sentimentData.mlResults;
-  console.log(riskLevel);
+  
+  // Helper function to determine risk class
+  const getRiskClass = (level) => {
+    switch(level) {
+      case "minimal": return "positive";
+      case "low": return "low-risk";
+      case "moderate": return "warning";
+      case "high": return "negative";
+      default: return "warning";
+    }
+  };
+  
+  // Helper function to format risk text
+  const formatRiskText = (level) => {
+    return `${level.toUpperCase()} RISK`;
+  };
   
   return (
     <div className="analysis-container">
@@ -36,7 +54,7 @@ const AnalysisResult = ({ analysis, sentimentData, username, tweets, mlResults }
               className="gauge-fill" 
               style={{ 
                 width: `${scorePercent}%`, 
-                backgroundColor: getScoreColor(averageCompound) 
+                backgroundColor: getScoreColor(scoreToDisplay) 
               }}
             ></div>
             <div className="gauge-markers">
@@ -46,9 +64,12 @@ const AnalysisResult = ({ analysis, sentimentData, username, tweets, mlResults }
             </div>
           </div>
           <div className="gauge-value">
-            Score: <span style={{ color: getScoreColor(averageCompound) }}>
-              {averageCompound.toFixed(2)}
+            Score: <span style={{ color: getScoreColor(scoreToDisplay) }}>
+              {scoreToDisplay.toFixed(2)}
             </span>
+            {combinedScore !== undefined && combinedScore !== averageCompound && (
+              <span className="combined-score-note"> (Combined Analysis)</span>
+            )}
           </div>
         </div>
         
@@ -72,7 +93,7 @@ const AnalysisResult = ({ analysis, sentimentData, username, tweets, mlResults }
           </div>
         </div>
         
-        {/* ML Model Prediction Section */}
+        {/* ML Model Prediction Section (show only if available) */}
         {/* {mlData && (
           <div className="ml-prediction">
             <h3 className="ml-heading">Machine Learning Analysis</h3>
@@ -90,21 +111,18 @@ const AnalysisResult = ({ analysis, sentimentData, username, tweets, mlResults }
         )} */}
         
         <div className="analysis-conclusion">
-          <div className={`conclusion-badge ${
-            riskLevel === "minimal" ? 'positive' : riskLevel === "moderate" ? 'warning' : 'negative'
-          }`}>
-            {riskLevel === "minimal" ? 'MINIMAL RISK' : 
-             riskLevel === "moderate" ? 'MODERATE RISK' : 'HIGH RISK'}
+          <div className={`conclusion-badge ${getRiskClass(riskLevel)}`}>
+            {formatRiskText(riskLevel)}
           </div>
         </div>
       </div>
 
-      {/* Add the new charts component */}
+      {/* Add the charts component */}
       <SentimentCharts 
-  tweets={tweets} 
-  sentimentData={sentimentData} 
-  mlResults={mlResults} 
-/>
+        tweets={tweets} 
+        sentimentData={sentimentData} 
+        mlResults={mlResults} 
+      />
     </div>
   );
 };

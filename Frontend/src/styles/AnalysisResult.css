@@ -1,3 +1,4 @@
+/* Risk level badge colors */
 .analysis-container {
   background-color: rgba(30, 30, 30, 0.7);
   border-radius: 12px;
@@ -201,22 +202,77 @@
   justify-content: center;
 }
 
+/* Updated consistent risk level badge styles */
 .conclusion-badge.positive {
-  color: var(--positive-color);
   background-color: rgba(46, 213, 115, 0.1);
   border: 1px solid rgba(46, 213, 115, 0.3);
+  color: var(--positive-color);
+}
+
+.conclusion-badge.low-risk {
+  background-color: rgba(126, 237, 159, 0.1);
+  border: 1px solid rgba(126, 237, 159, 0.3);
+  color: #7bed9f;
 }
 
 .conclusion-badge.warning {
-  color: var(--neutral-color);
   background-color: rgba(255, 165, 2, 0.1);
   border: 1px solid rgba(255, 165, 2, 0.3);
+  color: var(--neutral-color);
 }
 
 .conclusion-badge.negative {
-  color: var(--negative-color);
   background-color: rgba(255, 71, 87, 0.1);
   border: 1px solid rgba(255, 71, 87, 0.3);
+  color: var(--negative-color);
+}
+
+.combined-score-note {
+  font-size: 0.8rem;
+  opacity: 0.8;
+  margin-left: 5px;
+  font-style: italic;
+}
+
+/* ML Prediction section styling */
+.ml-prediction {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  padding: 1.25rem;
+  margin-top: 1rem;
+}
+
+.ml-heading {
+  font-family: var(--font-primary);
+  font-size: 1.1rem;
+  color: var(--primary-color);
+  margin-bottom: 0.75rem;
+}
+
+.ml-metrics {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.ml-metric {
+  background-color: rgba(30, 39, 67, 0.6);
+  border-radius: 8px;
+  padding: 1rem;
+  text-align: center;
+}
+
+.ml-metric-label {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.5rem;
+}
+
+.ml-metric-value {
+  font-family: var(--font-primary);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--text-color);
 }
 
 @media (max-width: 768px) {
@@ -246,3 +302,5 @@
     font-size: 1.2rem;
   }
 }
+
+

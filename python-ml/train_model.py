@@ -7,7 +7,7 @@ def main():
     os.makedirs('models/trained', exist_ok=True)
     
     # Set the path to your new larger dataset
-    data_path = 'data/depression_dataset_500.csv'
+    data_path = 'data/twitter_dataset.csv'
     
     # Check if the new dataset exists, otherwise use the original one
     if not os.path.exists(data_path):

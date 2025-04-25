@@ -41,7 +41,7 @@ python api.py
 cd react-frontend
 npm run dev
 
-# First, acquire a depression dataset (from Kaggle)
+<!-- # First, acquire a depression dataset (from Kaggle) -->
 # Place it in python-ml/data/depression_dataset.csv
 cd python-ml
 python train_model.py

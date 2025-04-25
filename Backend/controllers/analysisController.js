@@ -2,91 +2,91 @@ import axios from "axios";
 import { analyzeSentiment } from "../utils/sentimentAnalyzer.js";
 
 // Function to fetch tweets by username
-// const fetchTweetsByUsername = async (username) => {
-//   try {
-//     // Updated to request created_at for timestamps
-//     const url = `https://api.twitter.com/2/tweets/search/recent?query=from:${username}&max_results=10&tweet.fields=text,created_at`;
-//     const headers = {
-//       Authorization: `Bearer ${process.env.TWITTER_BEARER_TOKEN}`,
-//     };
-
-//     const response = await axios.get(url, { headers });
-
-//     // Return tweets with timestamps when available
-//     return (
-//       response.data.data?.map((tweet) => ({
-//         text: tweet.text,
-//         created_at: tweet.created_at || null,
-//       })) || []
-//     );
-//   } catch (error) {
-//     console.error(
-//       "Error fetching tweets:",
-//       error.response?.status,
-//       error.response?.data || error.message
-//     );
-
-//     if (error.response?.status === 404) {
-//       throw new Error("User not found or no recent tweets available.");
-//     } else if (error.response?.status === 401) {
-//       throw new Error("Invalid or expired Twitter API token.");
-//     } else if (error.response?.status === 429) {
-//       throw new Error("Rate limit exceeded. Please try again later.");
-//     } else {
-//       throw new Error("Failed to fetch tweets.");
-//     }
-//   }
-// };
-
-
-const getMockTweets = (username) => {
-  const mockTweets = [
-    // {
-    //   text: "Feeling good",
-    //   created_at: "2023-04-01T12:30:45Z"
-    // },
-    {
-      text: "Feeling want to die",
-      created_at: "2023-04-01T12:30:45Z"
-    },
-    {
-      text: "Feeling bad",
-      created_at: "2023-04-01T12:30:45Z"
-    },
-    {
-      text: "Feeling fantastic",
-      created_at: "2023-04-01T12:30:45Z"
-    },
-    // {
-    //   text: "Another sleepless night. The thoughts just won't stop.",
-    //   created_at: "2023-04-02T03:15:20Z"
-    // },
-    // {
-    //   text: "Why does everything feel so meaningless? Nothing seems worth the effort.",
-    //   created_at: "2023-04-03T14:45:33Z"
-    // },
-    // {
-    //   text: "Had a moment of happiness today when I saw a dog in the park. Small things matter.",
-    //   created_at: "2023-04-04T17:22:10Z"
-    // },
-    // {
-    //   text: "Sometimes I wonder if anyone would notice if I just disappeared.",
-    //   created_at: "2023-04-05T22:10:05Z"
-    // }
-  ];
-
-  return mockTweets;
-};
-
-// Modify fetchTweetsByUsername to use mock data if Twitter API fails
 const fetchTweetsByUsername = async (username) => {
   try {
-    return getMockTweets(username);
+    // Updated to request created_at for timestamps
+    const url = `https://api.twitter.com/2/tweets/search/recent?query=from:${username}&max_results=10&tweet.fields=text,created_at`;
+    const headers = {
+      Authorization: `Bearer ${process.env.TWITTER_BEARER_TOKEN}`,
+    };
+
+    const response = await axios.get(url, { headers });
+
+    // Return tweets with timestamps when available
+    return (
+      response.data.data?.map((tweet) => ({
+        text: tweet.text,
+        created_at: tweet.created_at || null,
+      })) || []
+    );
   } catch (error) {
-    console.error("Twitter API error:", error.message);
-    console.log("Using mock tweets instead");
+    console.error(
+      "Error fetching tweets:",
+      error.response?.status,
+      error.response?.data || error.message
+    );
+
+    if (error.response?.status === 404) {
+      throw new Error("User not found or no recent tweets available.");
+    } else if (error.response?.status === 401) {
+      throw new Error("Invalid or expired Twitter API token.");
+    } else if (error.response?.status === 429) {
+      throw new Error("Rate limit exceeded. Please try again later.");
+    } else {
+      throw new Error("Failed to fetch tweets.");
+    }
   }
 };
+
+
+// const getMockTweets = (username) => {
+//   const mockTweets = [
+//     // {
+//     //   text: "Feeling good",
+//     //   created_at: "2023-04-01T12:30:45Z"
+//     // },
+//     {
+//       text: "Feeling so good",
+//       created_at: "2023-04-01T12:30:45Z"
+//     },
+//     {
+//       text: "Feeling proud",
+//       created_at: "2023-04-01T12:30:45Z"
+//     },
+//     {
+//       text: "Feeling worthless",
+//       created_at: "2023-04-01T12:30:45Z"
+//     },
+//     // {
+//     //   text: "Another sleepless night. The thoughts just won't stop.",
+//     //   created_at: "2023-04-02T03:15:20Z"
+//     // },
+//     // {
+//     //   text: "Why does everything feel so meaningless? Nothing seems worth the effort.",
+//     //   created_at: "2023-04-03T14:45:33Z"
+//     // },
+//     // {
+//     //   text: "Had a moment of happiness today when I saw a dog in the park. Small things matter.",
+//     //   created_at: "2023-04-04T17:22:10Z"
+//     // },
+//     // {
+//     //   text: "Sometimes I wonder if anyone would notice if I just disappeared.",
+//     //   created_at: "2023-04-05T22:10:05Z"
+//     // }
+//   ];
+
+//   return mockTweets;
+// };
+
+// // Modify fetchTweetsByUsername to use mock data if Twitter API fails
+// const fetchTweetsByUsername = async (username) => {
+//   try {
+//     return getMockTweets(username);
+//   } catch (error) {
+//     console.error("Twitter API error:", error.message);
+//     console.log("Using mock tweets instead");
+//   }
+// };
 
 export const analyzeTweets = async (req, res) => {
   const { username } = req.params;
@@ -112,14 +112,27 @@ export const analyzeTweets = async (req, res) => {
 
     // Get ML analysis from Python service
     let mlResults = null;
+    let mlDepressionScore = 0;
     try {
       const mlResponse = await axios.post("http://localhost:5000/predict", {
         tweets: tweetTexts,
       });
       mlResults = mlResponse.data;
+      
+      // Convert ML percentage to a score between -1 and 1
+      // Assuming depressionPercentage is between 0-100
+      if (mlResults && mlResults.depressionPercentage !== undefined) {
+        mlDepressionScore = (mlResults.depressionPercentage / 50) - 1;  // Transforms 0% to -1, 50% to 0, 100% to 1
+      }
     } catch (mlError) {
       console.error("Error getting ML predictions:", mlError);
       // Continue with basic sentiment analysis if ML service is unavailable
+    }
+
+    // Calculate combined score (average of sentiment analysis and ML prediction)
+    let combinedScore = averageCompound;
+    if (mlResults && mlResults.depressionPercentage !== undefined) {
+      combinedScore = (averageCompound + mlDepressionScore) / 2;
     }
 
     // Create a combined analysis that integrates both sentiment and ML analysis when available
@@ -143,14 +156,14 @@ export const analyzeTweets = async (req, res) => {
       }
     }
     
-    // Determine an overall risk level
-    let riskLevel = "low";
-    if (mlResults && mlResults.riskLevel) {
-      riskLevel = mlResults.riskLevel;
-    } else if (averageCompound < -0.25) {
+    // Determine an overall risk level based on the combined score
+    let riskLevel = "minimal";
+    if (combinedScore < -0.5) {
       riskLevel = "high";
-    } else if (averageCompound < -0.1) {
+    } else if (combinedScore < -0.25) {
       riskLevel = "moderate";
+    } else if (combinedScore < 0) {
+      riskLevel = "low";
     }
     
     combinedAnalysis += `Overall risk assessment: ${riskLevel.toUpperCase()}.`;
@@ -163,6 +176,7 @@ export const analyzeTweets = async (req, res) => {
       tweetData: tweets,
       sentimentData: {
         averageCompound,
+        combinedScore,  // Add the combined score to the response
         analysisResult,
         detailedScores,
         riskLevel
